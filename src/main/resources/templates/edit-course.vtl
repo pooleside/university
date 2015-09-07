@@ -4,7 +4,7 @@
   <div class="col-md-2"></div>
   <div class="col-md-8 well">
 
-    <h3>Update $course.getName()$course.getCourseNum()</h3>
+    <h3>Update $course.getName(),$course.getCourseNum()</h3>
 
     <form action="/courses/$course.getId()/update" method="post">
       <div class="form-group">
@@ -16,7 +16,7 @@
 
 <br>
    <form action="/courses/$course.getId()/delete" method="post">
-      <button type="submit" class="btn btn-info $course.getName()$course.getCourseNum()">Delete Course</button>
+      <button type="submit" class="btn btn-info $course.getName(),$course.getCourseNum()">Delete Course</button>
     </form>
 
 

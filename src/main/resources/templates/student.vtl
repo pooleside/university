@@ -16,7 +16,7 @@
     <label for="course_id">Select a course</label>
     <select id='course_id' name='course_id' type='text'>
       #foreach($course in $allCourses)
-        <option value="$course.getId()"> $course.getName()$course.getCourseNum() </option>
+        <option value="$course.getId()"> $course.getName(),$course.getCourseNum()</option>
       #end
     </select>
     <button type='submit'>Add course</button>

@@ -46,7 +46,7 @@ public class StudentTest {
 
   @Test
   public void addCourse_addsCourseToStudent() {
-    Course myCourse = new Course("biology");
+    Course myCourse = new Course("biology", "bio101");
     myCourse.save();
     Student myStudent = new Student("Sue Hill", "020215");
     myStudent.save();
@@ -57,7 +57,7 @@ public class StudentTest {
 
   @Test
   public void getCourses_returnsAllCourses_ArrayList() {
-    Course myCourse = new Course("biology");
+    Course myCourse = new Course("biology", "bio101");
     myCourse.save();
     Student myStudent = new Student("Sue Hill", "020215");
     myStudent.save();
@@ -68,7 +68,7 @@ public class StudentTest {
 
   @Test
   public void delete_deletesALlStudentAndListsAssociations() {
-    Course myCourse = new Course("biology");
+    Course myCourse = new Course("biology", "bio101");
     myCourse.save();
 
     Student myStudent = new Student("Sue Hill", "020215");

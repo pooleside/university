@@ -16,21 +16,21 @@ public class CourseTest {
 
     @Test
     public void equals_returnsTrueIfNamesAretheSame() {
-      Course firstCourse = new Course("biology");
-      Course secondCourse = new Course("biology");
+      Course firstCourse = new Course("biology","bio101");
+      Course secondCourse = new Course("biology", "bio101");
       assertTrue(firstCourse.equals(secondCourse));
     }
 
     @Test
     public void save_savesIntoDatabase_true() {
-      Course myCourse = new Course("biology");
+      Course myCourse = new Course("biology", "bio101");
       myCourse.save();
       assertTrue(Course.all().get(0).equals(myCourse));
     }
 
     @Test
     public void find_findsCourseInDatabase_true() {
-      Course myCourse = new Course("biology");
+      Course myCourse = new Course("biology", "bio101");
       myCourse.save();
       Course savedCourse = Course.find(myCourse.getId());
       assertTrue(myCourse.equals(savedCourse));
@@ -38,7 +38,7 @@ public class CourseTest {
 
     @Test
     public void addStudent_addsStudentToCourse() {
-      Course myCourse = new Course("biology");
+      Course myCourse = new Course("biology", "bio101");
       myCourse.save();
 
       Student myStudent = new Student("Sue Hill", "020215");
@@ -52,7 +52,7 @@ public class CourseTest {
 
     @Test
     public void getStudents_returnsAllStudents_ArrayList() {
-      Course myCourse = new Course("biology");
+      Course myCourse = new Course("biology", "bio101");
       myCourse.save();
 
       Student myStudent = new Student("Sue Hill", "020215");
@@ -65,7 +65,7 @@ public class CourseTest {
 
     @Test
     public void delete_deletesAllListsAndStudentsAssociations() {
-      Course myCourse = new Course("biology");
+      Course myCourse = new Course("biology", "bio101");
       myCourse.save();
 
       Student myStudent = new Student("Sue Hill", "020215");
