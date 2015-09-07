@@ -4,17 +4,17 @@ import org.sql2o.*;
 public class DatabaseRule extends ExternalResource {
 
   protected void before() {
-  DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/to_do_test", null, null);
+  DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/university_test", null, null);
 }
 
 protected void after() {
   try(Connection con = DB.sql2o.open()) {
-    String deleteTasksQuery = "DELETE FROM tasks *;";
-    String deleteCategoryQuery = "DELETE FROM categories *;";
-    String deleteCategoriesTasksQuery = "DELETE FROM categories_tasks *;";
-    con.createQuery(deleteTasksQuery).executeUpdate();
-    con.createQuery(deleteCategoryQuery).executeUpdate();
-    con.createQuery(deleteCategoriesTasksQuery).executeUpdate();
+    String deleteStudentsQuery = "DELETE FROM students *;";
+    String deleteCourseQuery = "DELETE FROM courses *;";
+    String deleteCoursesStudentsQuery = "DELETE FROM courses_students *;";
+    con.createQuery(deleteStudentsQuery).executeUpdate();
+    con.createQuery(deleteCourseQuery).executeUpdate();
+    con.createQuery(deleteCoursesStudentsQuery).executeUpdate();
   }
 }
 }

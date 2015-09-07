@@ -5,127 +5,130 @@ import java.util.ArrayList;
 public class Student {
   private int id;
   private String description;
-  private boolean completed;
+  private String enrolldate;
 
 
   public int getId() {
     return id;
   }
 
-  public boolean getCompleted() {
-      return completed;
-  }
-
   public String getDescription() {
     return description;
   }
 
-  public Student(String description) {
-    this.description = description;
+  public String getEnrollDate() {
+    return enrolldate;
   }
 
-  // @Override
-  // public boolean equals(Object otherTask) {
-  //   if(!(otherTask instanceof Task)) {
-  //     return false;
-  //   } else {
-  //     Task newTask = (Task) otherTask;
-  //     return this.getDescription().equals(newTask.getDescription()) &&
-  //            this.getId() == newTask.getId();
-  //   }
-  // }
-  //
-  // public static List<Task> all() {
-  //   String sql = "SELECT id, description FROM tasks";
-  //   try(Connection con = DB.sql2o.open()) {
-  //     return con.createQuery(sql).executeAndFetch(Task.class);
-  //   }
-  // }
-  //
-  // public void save() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO tasks (description) VALUES (:description)";
-  //     this.id = (int) con.createQuery(sql, true)
-  //       .addParameter("description", this.description)
-  //       .executeUpdate()
-  //       .getKey();
-  //   }
-  // }
-  //
-  // public static Task find(int id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM tasks where id=:id";
-  //     Task task = con.createQuery(sql)
-  //         .addParameter("id", id)
-  //         .executeAndFetchFirst(Task.class);
-  //         return task;
-  //   }
-  // }
-  //
-  // public void addCategory(Category category) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO categories_tasks (category_id, task_id) VALUES (:category_id, :task_id)";
-  //     con.createQuery(sql)
-  //       .addParameter("category_id", category.getId())
-  //       .addParameter("task_id", this.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
-  // public ArrayList<Category> getCategories() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT category_id FROM categories_tasks WHERE task_id = :task_id";
-  //     List<Integer> categoryIds = con.createQuery(sql)
-  //       .addParameter("task_id", this.getId())
-  //       .executeAndFetch(Integer.class);
-  //
-  //       ArrayList<Category> categories = new ArrayList<Category>();
-  //
-  //       for(Integer categoryId : categoryIds) {
-  //         String taskQuery = "SELECT * FROM categories WHERE id = :categoryId";
-  //         Category category = con.createQuery(taskQuery)
-  //           .addParameter("categoryId", categoryId)
-  //           .executeAndFetchFirst(Category.class);
-  //         categories.add(category);
-  //       }
-  //     return categories;
-  //   }
-  // }
-  //
-  // public void delete() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String deleteQuery = "DELETE FROM tasks WHERE id = :id";
-  //       con.createQuery(deleteQuery)
-  //       .addParameter("id", id)
-  //       .executeUpdate();
-  //
-  //     String joinDeleteQuery = "DELETE FROM categories_tasks WHERE task_id = :taskId";
-  //       con.createQuery(joinDeleteQuery)
-  //         .addParameter("taskId", this.getId())
-  //         .executeUpdate();
-  //   }
-  // }
-  //
-  // public void markCompleted() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "UPDATE tasks SET completed = true WHERE id = :taskId";
-  //       con.createQuery(sql)
-  //       .addParameter("taskId", this.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
-  //
-  //
-  //
-  // public void update(String description) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "UPDATE tasks SET description = :description WHERE id = :id";
-  //     con.createQuery(sql)
-  //       .addParameter("description", description)
-  //       .addParameter("id", id)
-  //       .executeUpdate();
-  //   }
-  // }
+  public Student(String description, String enrolldate) {
+    this.description = description;
+    this.enrolldate = enrolldate;
+  }
+
+  @Override
+  public boolean equals(Object otherStudent) {
+    if(!(otherStudent instanceof Student)) {
+      return false;
+    } else {
+      Student newStudent = (Student) otherStudent;
+      return this.getDescription().equals(newStudent.getDescription()) &&
+             this.getId() == newStudent.getId();
+    }
+  }
+
+  public static List<Student> all() {
+    String sql = "SELECT id, description, enrolldate FROM students";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Student.class);
+    }
+  }
+
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO students (description, enrolldate) VALUES (:description, :enrolldate)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("description", this.description)
+        .addParameter("enrolldate", enrolldate)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static Student find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM students where id=:id";
+      Student student = con.createQuery(sql)
+          .addParameter("id", id)
+          .executeAndFetchFirst(Student.class);
+          return student;
+    }
+  }
+
+  public void addCourse(Course course) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO courses_students (course_id, student_id) VALUES (:course_id, :student_id)";
+      con.createQuery(sql)
+        .addParameter("course_id", course.getId())
+        .addParameter("student_id", this.getId())
+        .executeUpdate();
+    }
+  }
+
+  public ArrayList<Course> getCourses() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT course_id FROM courses_students WHERE student_id = :student_id";
+      List<Integer> courseIds = con.createQuery(sql)
+        .addParameter("student_id", this.getId())
+        .executeAndFetch(Integer.class);
+
+        ArrayList<Course> courses = new ArrayList<Course>();
+
+        for(Integer courseId : courseIds) {
+          String studentQuery = "SELECT * FROM courses WHERE id = :courseId";
+          Course course = con.createQuery(studentQuery)
+            .addParameter("courseId", courseId)
+            .executeAndFetchFirst(Course.class);
+          courses.add(course);
+        }
+      return courses;
+    }
+  }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String deleteQuery = "DELETE FROM students WHERE id = :id";
+        con.createQuery(deleteQuery)
+        .addParameter("id", id)
+        .executeUpdate();
+
+      String joinDeleteQuery = "DELETE FROM courses_students WHERE student_id = :studentId";
+        con.createQuery(joinDeleteQuery)
+          .addParameter("studentId", this.getId())
+          .executeUpdate();
+    }
+  }
+
+  public void markCompleted() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE students SET completed = true WHERE id = :studentId";
+        con.createQuery(sql)
+        .addParameter("studentId", this.getId())
+        .executeUpdate();
+    }
+  }
+
+
+
+
+  public void update(String description, String enrolldate) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE students SET description = :description, enrolldate = :enrolldate WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("description", description)
+        .addParameter("enrolldate", enrolldate)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
 
 }

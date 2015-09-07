@@ -1,0 +1,17 @@
+<h1>Student Master List</h1>
+
+<p>Add a new student:</p>
+
+<form action="/students" method="post">
+  <label for="description">Student Name</label>
+  <input id="description" name="description" type="text">
+  <label for "enrolldate">Enrollment date</label>
+      <input type="date" name="enrolldate">
+  <button type="submit">Add student</button>
+</form>
+
+#foreach ($student in $students)
+  <li><a href="/students/$student.getId()">$student.getDescription(), $student.getEnrollDate()</a></li>
+#end
+
+<p><a href='/'>Home</a></p>
